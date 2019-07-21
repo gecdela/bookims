@@ -1,0 +1,128 @@
+﻿
+@*@*@{
+    ViewBag.Title = "upload2";
+}
+
+<h2>upload2</h2>
+
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @id = "submitForm", enctype = "multipart/form-data" }))
+
+{
+
+    @Html.HiddenFor(m => m.Id)
+
+    @*@Html.HiddenFor(m=>m.us)*@
+
+    <div class="page27-form">
+
+        <div class="f-form01-item">
+
+            <label class="f-form01-label">姓名</label>
+
+            <div class="f-form01-main">
+
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "f-form01-input100", @id = "policyHolderName" } })
+
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "f-form01-input100" })
+
+            </div>
+
+        </div>
+
+
+
+        <div class="f-form01-item" id="divIdCardBox">
+
+            <label class="f-form01-label">证件号码</label>
+
+            <div class="f-form01-main">
+
+                @Html.EditorFor(model => model.IdCard, new { htmlAttributes = new { @class = "f-form01-input100", @id = "policyHolderIdCardNumber" } })
+
+                @Html.ValidationMessageFor(model => model.IdCard, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="page27-sfz" id="divIdCardPicBox">
+
+        <div class="f-form01-item">
+
+            @if (string.IsNullOrEmpty(Model.IdCardFacePicUrl))
+
+            {
+
+                <div class="f-form01-main">
+
+                    上传身份证正面
+
+                </div>
+
+            }
+
+            else
+
+            {
+
+                <div class="f-form01-main">
+
+                    <img src="@Url.Content(Model.IdCardFacePicUrl)" width="100px" height="50px" alt="img" />
+
+                </div>
+
+            }
+
+            <div class="f-form01-other">
+
+                <a href="#" id="btnUploadFacePic" class="f-button02">上传正面</a>
+
+                <input class="f-button02" name="IdCardFacePic" id="IdCardFacePicUrl" type="file" style="display:none" autocomplete="off" disableautocomplete="">
+
+            </div>
+
+        </div>
+
+        <div class="f-form01-item">
+
+            @if (string.IsNullOrEmpty(Model.IdCardBackPicUrl))
+
+            {
+
+                <div class="f-form01-main">
+
+                    上传身份证反面
+
+                </div>
+
+            }
+
+            else
+
+            {
+
+                <div class="f-form01-main">
+
+                    <img src="@Url.Content(Model.IdCardBackPicUrl)" width="100px" height="50px" alt="img" />
+
+                </div>
+
+            }
+
+            <div class="f-form01-other">
+
+                <a href="#" id="btnUploadBackPic" class="f-button02">上传反面</a>
+
+                <input class="f-button02" name="IdCardBackPic" id="IdCardBackPicUrl" type="file" style="display:none" autocomplete="off" disableautocomplete="">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+
+}*@*@

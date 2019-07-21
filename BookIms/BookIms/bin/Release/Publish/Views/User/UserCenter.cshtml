@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "InputStudent";
+}
+<link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-3.3.5-dist/js/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jqPaginator.js"></script>
+<style>
+    .error {
+        color: red;
+    }
+</style>
+<div class="container">
+    <nav class="nav navbar-inverse navbar-default">
+        <div class="navbar-header">
+            <p class="navbar-brand">
+                图书管理系统
+            </p>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            @if (@Session.Contents["username"] == null)
+            {
+                <li><a href="user/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            }
+            else
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>[@Session.Contents["username"]]<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/User/UserCenter?userId=@Session.Contents["userId"]"><i class="fa fa-user fa-fw"></i>个人中心</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/User/LogOff"><i class="fa fa-sign-out fa-fw"></i>退出</a></li>
+                    </ul>
+                </li>
+                <li><a href="/User/LogOff"><span class="glyphicon glyphicon-log-in"></span> [退出]</a></li>
+            }
+
+
+
+
+        </ul>
+        <hr />
+    </nav>
+    <br /><br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <ul id="myTab" class="nav navbar-default menu">
+                <li class="active">@Html.ActionLink("用户首页", "index", "User")</li>
+                <li class="active"><a href="/User/UserRecord?userId=@Session.Contents["userId"]"><i class="fa fa-user fa-fw"></i>租借记录</a></li>
+                <li><a href="/User/UserCenter?userId=@Session.Contents["userId"]"><i class="fa fa-user fa-fw"></i>个人中心</a></li>
+                <li>@Html.ActionLink("返回首页", "index", "User")</li>
+            </ul>
+        </div>
+
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="#">首页</a></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-4">
+                    <form method="post" action="" class="form-horizontal"
+                          enctype="multipart/form-data" id="update_form">
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="head" class="col-md-2">头像</label>
+                                <div class="col-md-8">
+                                    <img id="preview" name="headsrc" src="/images/@ViewData["head"]" width="30%" height="15%" />
+                                    <input type=file id="head" name="head" alt=" " onchange="javascript:setImagePreview();">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="per" class="col-md-2">角色</label>
+                                <div class="col-md-8">
+                                    @if ((string)@ViewData["per"] == "0")
+                                    {
+                                        <input type="text" id="per1" name="per" value="普通用户" disabled/>
+                                    }
+                                    else
+                                    {
+                                        <input type="text" id="per2" name="per" value="超级管理员" disabled/>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="username" class="col-md-2">用户名</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="username" name="username" value="@ViewData["username"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="password" class="col-md-2">密码</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="password" name="password" value="@ViewData["password"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="rpassword" class="col-md-2">重复密码</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="rpassword" name="rpassword" value="@ViewData["password"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="tel" class="col-md-2">电话</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="tel" name="tel" value="@ViewData["tel"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="email" class="col-md-2">邮箱</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="email" name="email" value="@ViewData["email"]" />
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-2">
+                                    <input type="submit" class="btn btn-primary btn-block " Onclick="update()" value="更改" />
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="/User/Index"><button type="button" class="btn btn-warning btn-block " value="返回">返回</button></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    function update() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var rpassword = $("#rpassword").val();
+        var tel = $("#tel").val();
+        var email = $("#email").val();
+        $.validator.setDefaults(
+            {
+                submitHandler: function () {
+                    $.ajax({
+                        url: "/User/Update",
+                        data: "username=" + username + "&password=" + password + "&tel=" + tel + "&per=" +@ViewData["per"]+"&email="+ email+"&userId="+@Session.Contents["userId"],
+                        type: "post",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                        success: function (result) {
+                            if (result == '0') {
+                                alert("更新失败！");
+                                window.location.reload();
+                            }
+                            else {
+                                alert("修改成功！");
+                                window.location = '/User/Index';
+                            }
+                        }
+                    });
+                }
+            }
+        );
+        $("#update_form").validate(
+            {
+                rules: {
+                    username:
+                    {
+                        required: true,
+                    },
+                    password:
+                    {
+                        required: true,
+                    },
+                    rpassword:
+                    {
+                        required: true,
+                        equalTo: "#password",
+                    },
+                    email:
+                    {
+                        required: true,
+                    },
+                    tel:
+                    {
+                        required: true,
+                    },
+                },
+                messages:
+                {
+                    username: {
+                        required: "用户名不能为空!",
+                    },
+                    password: {
+                        required: "密码不能为空!",
+                    },
+                    rpassword: {
+                        required: "重复密码不能为空!",
+                        equalTo: "两次密码不一致！",
+                    },
+                    tel: {
+                        required: "电话不能为空!",
+                    },
+                    email: {
+                        required: "邮箱不能为空!",
+                    },
+                }
+            });
+    }
+</script>

@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<html>
+<head>
+
+    <link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="hd" class="col-md-12" style="height:200px;">
+                <nav class="nav navbar-inverse navbar-default">
+                    <a class="navbar-brand" href="#">图书管理系统</a>
+                    <hr />
+                </nav>
+            </div>
+        </div>
+        <div id="container">
+            <div class="row" style="height:700px;">
+                <div class="col-md-4 col-md-offset-4">
+                    <form class="bs-example bs-example-form" method="post" id="loginform" action="">
+                        <h2 style="text-align:center">欢迎登陆</h2>
+                        <div class="form-group">
+                            <label for="username" class="input">用户名</label><br />
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="input">密&nbsp;&nbsp;&nbsp;&nbsp;码</label><br />
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                <input type="password" class="form-control" id="password" name="password">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">角色</label>
+                            <div class="col-xs-pull-4">
+                                <select class="form-control form-control-lg" name="per" id="select">
+                                    <option value="">=====请选择=====</option>
+                                    <option value="1">普通用户</option>
+                                    <option value="0">超级管理员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" id="message">
+
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-block " onClick="login() " value="登陆" />
+                        </div>
+                        <div class="form-group">
+                            <a href="user/register.jsp"><button type="button" class="btn btn-primary btn-block " value="注册">注册</button></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="bottom" class="col-sm-12">
+                    <hr />
+                    <center>
+                        <font size="2" color="#000000">
+                            版本2.0<br />
+                        </font>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/bootstrap-3.3.5-dist/js/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+
+        function login() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var selectedIndex = $("#select").get(0).selectedIndex - 1;
+            $.validator.setDefaults(
+                {
+                    submitHandler: function () {
+                        $.ajax({
+                            url: "/User/LoginConfirm",
+                            data: "username=" + username + "&password=" + password + "&selectedIndex=" + selectedIndex,
+                            type: "post",
+                            dataType: "html",
+                            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                            success: function (result) {
+                                if (result == '0') {
+                                    var str = '<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>警告！用户名或密码错误！</strong></div>';
+                                    $("#message").html(str);
+                                    setTimeout('window.location.reload();', 2000);
+                                }
+                                else {
+                                    alert("登陆成功！");
+                                    if (selectedIndex == '0') {
+                                        window.location = '/User/Index';
+                                    } else
+                                    {
+                                        window.location = '/Manager/UserManage';
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            );
+            $("#loginform").validate(
+                {
+                    rules: {
+                        username:
+                        {
+                            required: true,
+                        },
+                        password:
+                        {
+                            required: true,
+                        },
+                        per:
+                        {
+                            required: true,
+                        },
+
+                    },
+                    messages:
+                    {
+                        username: {
+                            required: "用户名不能为空!",
+                        },
+                        password: {
+                            required: "密码不能为空!",
+                        },
+                        per: {
+                            required: "未选择角色!",
+                        },
+                    }
+                });
+
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "InputStudent";
+}
+<link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-3.3.5-dist/js/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jqPaginator.js"></script>
+<div class="container">
+    <nav class="nav navbar-inverse navbar-default">
+        <div class="navbar-header">
+            <p class="navbar-brand">
+                图书管理系统
+            </p>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            @if (@Session.Contents["username"] == null)
+            {
+                <li><a href="user/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="/User/Login"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            }
+            else
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>[@Session.Contents["username"]]<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/User/UserCenter?userId=@Session.Contents["userId"]"><i class="fa fa-user fa-fw"></i>个人中心</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/User/LogOff"><i class="fa fa-sign-out fa-fw"></i>退出</a></li>
+                    </ul>
+                </li>
+                <li><a href="/User/LogOff"><span class="glyphicon glyphicon-log-in"></span> [退出]</a></li>
+            }
+        </ul>
+        <hr />
+    </nav>
+    <br /><br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <ul id="myTab" class="nav navbar-default menu">
+                <li class="active">@Html.ActionLink("用户首页", "index", "User")</li>
+                <li class="active"><a href="/User/UserRecord?userId=@Session.Contents["userId"]"><i class="fa fa-user fa-fw"></i>租借记录</a></li>
+                <li><a href="/User/UserCenter?userId=@Session.Contents["userId"]"><i class="fa fa-user fa-fw"></i>个人中心</a></li>
+                <li>@Html.ActionLink("返回首页", "index", "User")</li>
+            </ul>
+        </div>
+
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="#">首页</a></li>
+                        <li class="active"><a href="#">用户首页</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-2">
+                    <img alt="" id="bookpic" src="/@ViewData["BookPic"]">
+                </div>
+                <div class="col-md-offset-1 col-md-6">
+                    <form class="form">
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="id" class="col-sm-3">图书编号</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="bookId" name="bookId" value="@ViewData["BookId"]" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="id" class="col-sm-3">图书名称</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="bookName" value="@ViewData["BookName"]" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="id" class="col-sm-3">图书作者</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="bookAuthor" value="@ViewData["BookAuthor"]" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="id" class="col-sm-3">图书价格</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="bookPrice" value="@ViewData["BookPrice"]" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="id" class="col-sm-3">图书状态</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="status" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="id" class="col-sm-3">借书时间段</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="time" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-3">
+                                    <button class="btn btn-primary btn-block " value="借书" id="borrowbtn">借书</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="Index"><button type="button" class="btn btn-warning btn-block " value="返回">返回</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var status = $("#status").val();
+        if (@ViewData["status"] == "1")
+        {
+            $("#status").val("可借");
+            $("#borrowbtn").removeAttr('disabled');
+        }
+        else if (@ViewData["status"] == "0")
+        {
+            $("#status").val("已借");
+            $("#borrowbtn").prop("disabled", true);
+        }
+    });
+    $("#borrowbtn").click(function () {
+        var bookId = $("#bookId").val();
+        var bookName = $("#bookName").val();
+        var bookAuthor = $("#bookAuthor").val();
+        var bookPrice = $("#bookPrice").val();
+        var bookPic = $("#bookpic").attr("src");
+        var status = $("#status").val();
+
+            $.ajax({
+                url: "/User/BorrowBook",
+                data: "BookId=" + bookId + "&bookName=" + bookName + "&bookAuthor=" + bookAuthor + "&bookPrice=" + bookPrice + "&bookPic=" + bookPic+"&userId=@Session.Contents["userId"]",
+                type: "post",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                success: function (result) {
+                    alert("借阅成功！");
+                    window.location = '/User/Index';
+                }
+            });
+        
+    });
+
+</script>

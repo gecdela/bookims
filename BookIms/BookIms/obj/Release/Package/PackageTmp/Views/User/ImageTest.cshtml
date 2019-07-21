@@ -1,0 +1,68 @@
+﻿
+@*@{
+    ViewBag.Title = "ImageTest";
+}
+
+<h2>ImageTest</h2>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ImagesAutoUpload.aspx.cs" Inherits="BackManagement_ImagesAutoUpload" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>自动上传图片并加文字水印</title>
+</head>
+<body>
+    <form. id="form1" runat="server" method="post" enctype="multipart/form-data">
+        <label for="pagebody1" style="display: none">
+        </label>
+        <fieldset id="container">
+            <legend>上传图片并加文字水印</legend>
+            <div class="window" style="list-style. none;">
+                <div style="padding: 0px; width: 808px; height: 200px; float: left; margin-right: 0px;">
+                    <ul>
+                        <li style="width: 150px; margin: 0px; padding: 0px; float: left;">
+                            <asp:Image ID="Image1" runat="server" Height="200px" BorderWidth="2px" Width="150px" ImageUrl="~/images/Jpg/135X67/0_11_16.gif" />
+                        </li>
+                        <li style="width: 250px; margin: 0px;">
+                            <asp:ListBox ID="FileList" runat="server" Width="250px" Height="200px"></asp:ListBox>
+                        </li>
+                        <li style="width: 400px; margin: 0px; float: right;">
+                            <br />
+                            (1)图片将保存在你网站根目录中，你可以修改它，但建议你使用默认目录。
+                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                            <br />
+                            (2)上传图片保存在所建目录的子目录 /images下；缩略图在 /thumbnails下；文字水印图在 /textImages下；图形水印图在 /waterImages目录下。<br />
+                            (3)生成的缩略图的默认宽度和高度均为100px，你也可以修改它们，
+                            宽为：
+                            <asp:TextBox ID="TextBox4" runat="server" Width="54px"></asp:TextBox>
+                            高为：
+                            <asp:TextBox ID="TextBox5" runat="server" Width="56px"></asp:TextBox> <br />
+                            <asp:CheckBox ID="CheckBox1" runat="server" Text="文字水印" />
+                            <asp:CheckBox ID="CheckBox2" runat="server" Text="图形水印" />
+                            你可以选择是否生成水印图，默认不生成。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <asp:FileUpload ID="FindFile" runat="server" Width="529px" />
+            </div>
+            <div>
+                <asp:TextBox ID="TipInfo" runat="server" Width="400px"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Width="400px"></asp:TextBox>
+            </div>
+            <div>
+                <asp:Button ID="Upload" runat="server" Text="上  传" Style="height: 26px" nClick="Upload_Click" />
+                <asp:Button ID="AddFile" runat="server" Text="添  加" nClick="AddFile_Click1" />
+                <asp:Button ID="AddAllFile" runat="server" Text="全部添加" nClick="AddAllFile_Click" Enabled="False" />
+                <asp:Button ID="DelFile" runat="server" Text="删  除" nClick="DelFile_Click1" />
+                <asp:Button ID="btnExit" runat="server" Text="完  成" />
+            </div>
+            <div>
+
+            </div>
+        </fieldset>
+        </form>
+    </form.>
+</body>
+</html>*@

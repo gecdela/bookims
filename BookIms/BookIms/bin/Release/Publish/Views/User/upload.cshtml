@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "upload";
+}
+
+<h2>upload</h2>
+
+<form id="fileInfo" enctype="multipart/form-data" target="screct_frame" method="POST" action="/User?sign=readExcel">
+
+    <input type="file" name="uploadfile" id="uploadfile" />
+    <button class="btn btn-default" type="submit">确定</button>
+
+</form>
+<iframe name="screct_frame" style="display: none;"></iframe>

@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "UploadImg";
+}
+
+<h2>UploadImg</h2>
+
+<body>
+    <div>
+        <form action="/User/UploadImg" method="post" enctype="multipart/form-data" runat="server">
+            <input type="file" name="file1" /><br />
+            <input type="text" id="username"name="username"/>
+            <input type="submit" value="submit" />
+        </form>
+    </div>
+</body>

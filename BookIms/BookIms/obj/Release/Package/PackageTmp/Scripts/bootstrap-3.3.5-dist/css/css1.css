@@ -1,0 +1,39 @@
+.slider2_nav
+{
+    z-index: 8;
+}
+.slider2_index
+{
+    background-color: black;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+
+}
+.slider2_index_selected
+{
+    background-color: orange;
+}
+.slider2_main
+{
+    list-style: none;
+    position:relative;
+    left:-35px;
+    height: 100px;
+}
+.slider2_li
+{
+    position: absolute;
+}
+.slider2_main img
+{
+    width: 180px;
+    height: 100px;
+}
+.slider2_extra
+{
+    height: 30px;
+    background-color: grey;
+    opacity: 0.5;
+}
